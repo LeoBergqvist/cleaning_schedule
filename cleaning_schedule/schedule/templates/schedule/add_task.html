@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Task</title>
+    <style>
+        form {
+            max-width: 500px;
+            /* margin: 20px auto; */
+            font-family: sans-serif;
+        }
+
+        .field-row {
+            margin-bottom: 12px;
+        }
+
+        label {
+            display: inline-block;
+            width: 120px; /* aligns all labels in a column */
+            font-weight: bold;
+            vertical-align: top;
+        }
+
+        input, select, textarea {
+            width: 60%;
+            padding: 5px;
+            box-sizing: border-box;
+        }
+
+        small {
+            color: gray;
+            display: block;
+            margin-left: 120px;
+        }
+
+        .errorlist {
+            color: red;
+            margin-left: 120px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Add a New Task</h2>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+
+        {% for field in form %}
+            <div class="field-row">
+                <label for="{{ field.id_for_label }}">{{ field.label }}:</label>
+                {{ field }}
+                {% if field.help_text %}
+                    <small>{{ field.help_text }}</small>
+                {% endif %}
+                {{ field.errors }}
+            </div>
+        {% endfor %}
+
+        <button type="submit">Add Task</button>
+    </form>
+
+    <p>
+        You can remove tasks here 
+        <a href="{% url 'tasks_descriptions' %}">Tasks list</a>
+    </p>    
+    <p>
+        <a href="{% url 'task_list' %}">Back to Schedule</a>
+    </p>
+</body>
+</html>
+
+<!-- <!DOCTYPE html>
+<html>
+<head>
+    <title>Add Task</title>
+</head>
+<body>
+    <h2>Add a New Task</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Add Task</button>
+    </form>
+    <p>You can remove tasks here <a href="{% url 'tasks_descriptions' %}">Tasks list</a></p>    
+    <p><a href="{% url 'tasks_descriptions' %}">Back to task list</a></p>
+</body>
+</html> -->

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tenants</title>
+</head>
+<body>
+    <h2>Tenant List</h2>
+
+    <table border="1" cellpadding="8">
+        <tr>
+            <th>Tenants</th>
+            <th>Actions</th>
+        </tr>
+        {% for tenant in tenants %}
+        <tr>
+            <td>{{ tenant.room.name }} - {{tenant.name}}</td>
+            <td>
+                <button><a href="{% url 'edit_tenant' tenant.id %}">✏️ Edit</a></button>
+                <form action="{% url 'delete_tenant' tenant.id %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit">🗑️ Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <p><a href="{% url 'task_list' %}">⬅ Back to Schedule</a></p>
+</body>
+</html>

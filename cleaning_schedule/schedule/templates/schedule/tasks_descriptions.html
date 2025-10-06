@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Task Descriptions</title>
+    <style>
+        table { border-collapse: collapse; width: 80%; margin: auto; }
+        th, td { border: 1px solid #ddd; padding: 8px; }
+        th { background-color: #f2f2f2; }
+    </style>
+</head>
+<body>
+    <h1 style="text-align:center;">Task Descriptions</h1>
+    <table>
+        <tr>
+            <th>Task</th>
+            <!-- <th>Description</th>
+            <th>Due Date</th> -->
+            <th>Description</th>
+            <!-- <th>Status</th> -->
+            <th>Actions</th>
+        </tr>
+        {% for task in tasks %}
+        <tr>
+            <td>{{ task.name }}</td>
+            <td>{{ task.description }}</td>
+            <td>
+                <button><a href="{% url 'edit_task' task.id %}">✏️ Edit</a></button>
+                <form action="{% url 'delete_task' task.id %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit">🗑️ Delete</button>
+                </form>
+            </td>
+
+        </tr>
+        {% endfor %}
+    </table>
+
+    <p><a href="{% url 'task_list' %}">⬅ Back to Schedule</a></p>
+</body>
+</html>
