@@ -1,12 +1,15 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html>
 <head>
     <title>Cleaning Schedule</title>
-    <style>
+    <link rel="stylesheet" href="{% static 'schedule/style.css' %}">
+    <!-- <style>
         table { border-collapse: collapse; width: 80%; margin: auto; }
         th, td { border: 1px solid #ddd; padding: 8px; }
         th { background-color: #f2f2f2; }
-    </style>
+    </style> -->
 </head>
 <body>
     <h1 style="text-align:center;">Cleaning Schedule</h1>
@@ -34,32 +37,33 @@
                     Pending
                     <form method="post" action="{% url 'task_done' task.id %}">
                         {% csrf_token %}
-                        <button type="submit" style="margin-bottom: 15px;">☑️</button>
+                        <button class="done-button" type="submit" style="margin-bottom: 15px;">☑️</button>
                     </form>
                 {% endif %}
             </td>
         </tr>
         {% endfor %}
     </table>
-    <a href="{% url 'add_tenant' %}">
-            <button style="margin-bottom: 15px;">➕ Add Tenant</button>
-    </a>
-    <a href="{% url 'tenant_list' %}">
-        <button style="margin-left: 10px;">👥 View Tenants</button>
-    </a>
-
+    <div class="table-actions">
+        <a href="{% url 'add_tenant' %}">
+            <button>➕ Add Tenant</button>
+        </a>
+        <a href="{% url 'tenant_list' %}">
+            <button>👥 View Tenants</button>
+        </a>
         <a href="{% url 'add_task' %}">
-            <button style="margin-bottom: 15px;">➕ Add Task</button>
+            <button>➕ Add Task</button>
+        </a>
+        <a href="{% url 'tasks_descriptions' %}">
+            <button>📋 View Tasks</button>
+        </a>
 
-    <a href="{% url 'tasks_descriptions' %}">
-        <button>📋 View Tasks</button>
-    </a>
+        <form action="{% url 'rotate_tasks' %}" method="post" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit">🔄 Rotate Tasks</button>
+        </form>
+    </div>
 
-    <!-- in your template -->
-    <form action="{% url 'rotate_tasks' %}" method="post">
-    {% csrf_token %}
-    <button type="submit">Rotate Tasks</button>
-    </form>
 
     <!-- <a href="{% url 'reassign_task' %}">
         <button>Swap Tasks Between Tenants</button>

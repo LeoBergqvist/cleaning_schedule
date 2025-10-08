@@ -1,7 +1,9 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
     <title>Add Tenant</title>
+    <link rel="stylesheet" href="{% static 'schedule/style.css' %}">
 </head>
 <body>
     <h2>Add a New Tenant</h2>
@@ -12,6 +14,6 @@
     </form>
     <p>Only empty rooms show and can be chosen</p>
     <p>Be sure to remove tenants who has moved out under <a href="{% url 'tenant_list' %}">Tenant list</a></p>    
-    <p><a href="{% url 'task_list' %}">Back to Schedule</a></p>
+    <p><a href="{% url 'task_list' %}">⬅ Back to Schedule</a></p>
 </body>
 </html>
