@@ -2,7 +2,7 @@
 body {
     font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     background-color: #f8fafc;
-    color: #333;
+    color: black;
     margin: 0;
     padding: 0;
 }
@@ -53,6 +53,7 @@ button {
     border: none;
     color: white;
     padding: 8px 14px;
+    margin: 1px;
     border-radius: 6px;
     cursor: pointer;
     font-size: 0.9rem;
@@ -87,7 +88,11 @@ button:hover {
 
 a {
     text-decoration: none;
-    margin: 0 6px;
+    margin: 0 3px;    
+}
+
+.href-button{
+    color:white;
 }
 
 .status-done {
@@ -114,6 +119,14 @@ a {
 
 .done-button {
     background-color: #dfe5ed;
+    color: rgb(39, 38, 38);
+    text-decoration: dashed;
+}
+
+.done-button:hover {
+    background-color: #2563eb;
+    transform: translateY(-1px);
+    color: white;
 }
 
 .table-actions button {

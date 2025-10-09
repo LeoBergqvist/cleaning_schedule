@@ -7,18 +7,18 @@
     <link rel="stylesheet" href="{% static 'schedule/style.css' %}">
 </head>
 <body>
-    <h2>Tenant List</h2>
+    <h1>Tenant List</h1>
 
     <table border="1" cellpadding="8">
         <tr>
-            <th>Tenants</th>
-            <th>Actions</th>
+            <th><strong>Tenants</strong></th>
+            <th><strong>Actions</strong></th>
         </tr>
         {% for tenant in tenants %}
         <tr>
             <td>{{ tenant.room.name }} - {{tenant.name}}</td>
             <td>
-                <button><a href="{% url 'edit_tenant' tenant.id %}">✏️ Edit</a></button>
+                <button><a class="href-button" href="{% url 'edit_tenant' tenant.id %}">✏️ Edit</a></button>
                 <form action="{% url 'delete_tenant' tenant.id %}" method="post" style="display:inline;">
                     {% csrf_token %}
                     <button type="submit">🗑️ Delete</button>

@@ -34,10 +34,10 @@
                 {% if task.status == "done" %}
                     ✅ Done                       
                 {% elif task.status == "pending" %}
-                    Pending
+                    
                     <form method="post" action="{% url 'task_done' task.id %}">
                         {% csrf_token %}
-                        <button class="done-button" type="submit" style="margin-bottom: 15px;">☑️</button>
+                        <button class="done-button" type="submit" style="margin-bottom: 15px;">Pending ☑️</button>
                     </form>
                 {% endif %}
             </td>

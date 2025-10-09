@@ -25,9 +25,9 @@
         {% for task in tasks %}
         <tr>
             <td>{{ task.name }}</td>
-            <td>{{ task.description }}</td>
+            <td><em>{{ task.description }}</em></td>
             <td>
-                <button><a href="{% url 'edit_task' task.id %}">✏️ Edit</a></button>
+                <button><a class="href-button" href="{% url 'edit_task' task.id %}">✏️ Edit</a></button>
                 <form action="{% url 'delete_task' task.id %}" method="post" style="display:inline;">
                     {% csrf_token %}
                     <button type="submit">🗑️ Delete</button>

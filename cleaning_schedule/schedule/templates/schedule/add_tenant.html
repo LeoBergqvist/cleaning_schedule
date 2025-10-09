@@ -12,8 +12,8 @@
         {{ form.as_p }}
         <button type="submit">Add Tenant</button>
     </form>
-    <p>Only empty rooms show and can be chosen</p>
-    <p>Be sure to remove tenants who has moved out under <a href="{% url 'tenant_list' %}">Tenant list</a></p>    
+    <p>*Only empty rooms show and can be chosen</p>
+    <p>Be sure to remove tenants who has moved out under: <a href="{% url 'tenant_list' %}">Tenant list</a></p>    
     <p><a href="{% url 'task_list' %}">⬅ Back to Schedule</a></p>
 </body>
 </html>

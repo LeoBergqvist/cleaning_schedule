@@ -5,7 +5,7 @@ class TenantForm(forms.ModelForm):
     room = forms.ModelChoiceField(
         queryset=Room.objects.filter(tenant__isnull=True),  # only empty rooms
         required=False,
-        help_text="Select a room for this tenant"
+        help_text="Select a room* for this tenant"
     )
 
     class Meta:
