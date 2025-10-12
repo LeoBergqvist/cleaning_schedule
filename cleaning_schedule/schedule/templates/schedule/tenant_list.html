@@ -4,15 +4,17 @@
 <html>
 <head>
     <title>Tenants</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Kosugi+Maru&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'schedule/style.css' %}">
 </head>
 <body>
     <h1>Tenant List</h1>
 
-    <table border="1" cellpadding="8">
+    <table>
         <tr>
-            <th><strong>Tenants</strong></th>
-            <th><strong>Actions</strong></th>
+            <th>Tenants</th>
+            <th>Actions</th>
         </tr>
         {% for tenant in tenants %}
         <tr>

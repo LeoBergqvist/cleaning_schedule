@@ -5,6 +5,8 @@
 <head>
     <title>Task Descriptions</title>
     <link rel="stylesheet" href="{% static 'schedule/style.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Kosugi+Maru&display=swap" rel="stylesheet">
     <!-- <style>
         table { border-collapse: collapse; width: 80%; margin: auto; }
         th, td { border: 1px solid #ddd; padding: 8px; }
@@ -13,6 +15,7 @@
 </head>
 <body>
     <h1 style="text-align:center;">Task Descriptions</h1>
+    <div class="table-container">
     <table>
         <tr>
             <th>Task</th>
@@ -37,7 +40,7 @@
         </tr>
         {% endfor %}
     </table>
-
+    </div>
     <p><a href="{% url 'task_list' %}">⬅ Back to Schedule</a></p>
 </body>
 </html>

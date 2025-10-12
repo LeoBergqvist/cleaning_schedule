@@ -5,6 +5,9 @@
 <head>
     <title>Cleaning Schedule</title>
     <link rel="stylesheet" href="{% static 'schedule/style.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Kosugi+Maru&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <!-- <style>
         table { border-collapse: collapse; width: 80%; margin: auto; }
         th, td { border: 1px solid #ddd; padding: 8px; }
@@ -13,6 +16,7 @@
 </head>
 <body>
     <h1 style="text-align:center;">Cleaning Schedule</h1>
+    <div class="vertical-banner">渋谷池尻1</div>
     <table>
         <tr>
             <th>Responsible</th>
@@ -62,8 +66,11 @@
             {% csrf_token %}
             <button type="submit">🔄 Rotate Tasks</button>
         </form>
+    <img id="pokeball" src="{% static 'schedule/images/Poké_Ball_icon.svg.png' %}" alt="Logo">    
     </div>
 
+    
+    
 
     <!-- <a href="{% url 'reassign_task' %}">
         <button>Swap Tasks Between Tenants</button>
