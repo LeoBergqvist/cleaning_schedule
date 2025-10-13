@@ -1,9 +1,9 @@
 from django.db import models
-from django.contrib.auth.models import User
+
 
 class Tenant(models.Model):
     name = models.CharField(max_length=100)
-    email = models.EmailField(null=True, blank=True)  
+    email = models.EmailField(null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -11,21 +11,21 @@ class Tenant(models.Model):
 
 class Room(models.Model):
     name = models.CharField(max_length=100)
-    tenant = models.OneToOneField(Tenant, on_delete=models.SET_NULL, 
+    tenant = models.OneToOneField(Tenant, on_delete=models.SET_NULL,
                                   related_name="room", null=True, blank=True)
 
-    def __str__(self):            
+    def __str__(self):
             return f"{self.name} ({self.tenant.name if self.tenant else 'empty'})"
 
 class Task(models.Model):
     name = models.CharField(max_length=100)
-    description = models.TextField(blank=True)    
+    description = models.TextField(blank=True)
 
     STATUS_CHOICES = [
         ("pending", "Pending"),
         ("done", "Done"),
     ]
-    
+
     room = models.ForeignKey(Room, on_delete=models.CASCADE, null=True, related_name="assigned")
     #schedule = models.ForeignKey(Schedule, on_delete=models.CASCADE, related_name="assignments")
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="pending")

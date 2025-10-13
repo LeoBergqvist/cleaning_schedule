@@ -1,5 +1,7 @@
 from django import forms
-from .models import Tenant, TaskAssignment, Room, Task
+
+from .models import Room, Task, TaskAssignment, Tenant
+
 
 class TenantForm(forms.ModelForm):
     room = forms.ModelChoiceField(
@@ -11,7 +13,7 @@ class TenantForm(forms.ModelForm):
     class Meta:
         model = Tenant
         fields = ["name", "email", "room"]
-    
+
     def clean_name(self):
         name = self.cleaned_data.get("name", "")
         return name.title()  # capitalize first letter only
@@ -40,4 +42,3 @@ class TaskReassignmentForm(forms.ModelForm):
     class Meta:
         model = TaskAssignment
         fields = '__all__'
-

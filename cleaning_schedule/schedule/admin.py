@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import Tenant, Room, Task, TaskAssignment, TaskLog
+
+from .models import Room, Task, TaskAssignment, TaskLog, Tenant
 
 admin.site.register(Tenant)
 admin.site.register(Room)

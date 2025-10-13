@@ -1,0 +1,15 @@
+[tool.ruff]
+# Maximum line length — matches Black's default
+line-length = 88
+
+# Rules to check — common linting categories
+select = ["E", "F", "W", "C", "B", "I"]
+
+# Ignore rules that conflict with Black
+ignore = ["E203"]
+
+# Optional: Treat Ruff warnings as errors (you can comment out if you prefer)
+# extend-select = ["RUF"] 
+
+# Include all Python files in the project
+exclude = ["venv", "__pycache__"]

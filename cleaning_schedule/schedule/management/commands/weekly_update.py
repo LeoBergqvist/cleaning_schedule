@@ -1,7 +1,9 @@
 # tasks/management/commands/weekly_update.py
 
 from django.core.management.base import BaseCommand
-from schedule.models import Task, Tenant  # Adjust import if models are elsewhere
+
+from schedule.models import Task  # Adjust import if models are elsewhere
+
 
 class Command(BaseCommand):
     help = 'Weekly task reset: mark tasks incomplete and reassign to new tenant'
