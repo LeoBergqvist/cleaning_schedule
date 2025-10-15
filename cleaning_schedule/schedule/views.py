@@ -86,7 +86,10 @@ def delete_task(request, task_id):
 
 def task_done(request, task_id):
     task = get_object_or_404(Task, id=task_id)
-    task.status = "done"
+    if task.status == "pending":
+        task.status = "done"
+    else:
+        task.status = "pending"
     task.save()
     return redirect("task_list")
 

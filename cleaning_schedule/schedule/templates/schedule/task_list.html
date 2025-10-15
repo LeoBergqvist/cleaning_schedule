@@ -2,6 +2,7 @@
 
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Cleaning Schedule</title>
     <link rel="stylesheet" href="{% static 'schedule/style.css' %}">
@@ -14,6 +15,7 @@
         th { background-color: #f2f2f2; }
     </style> -->
 </head>
+
 <body>
     <h1 style="text-align:center;">Cleaning Schedule</h1>
     <div class="vertical-banner">渋谷池尻1</div>
@@ -28,22 +30,26 @@
         {% for task in tasks %}
         <tr>
             {% if task.room %}
-                <td>{{ task.room.name }} ({{ task.room.tenant }})</td>            
+            <td>{{ task.room.name }} ({{ task.room.tenant }})</td>
             {% else %}
-                <td>Unassigned</td> 
+            <td>Unassigned</td>
             {% endif %}
             <td>{{ task.name }}</td>
-            
+
             <td>
-                {% if task.status == "done" %}
-                    ✅ Done                       
-                {% elif task.status == "pending" %}
-                    
-                    <form method="post" action="{% url 'task_done' task.id %}">
-                        {% csrf_token %}
-                        <button class="done-button" type="submit" style="margin-bottom: 15px;">Pending ☑️</button>
-                    </form>
-                {% endif %}
+                <form method="post" action="{% url 'task_done' task.id %}">
+                    {% csrf_token %}
+                    <button type="submit"
+                        class="done-button {% if task.status == 'done' %}done{% elif task.status == 'pending' %}pending{% endif %}"
+                        style="margin-bottom: 15px;">
+                        {% if task.status == "done" %}
+                        ✅ Done
+                        {% elif task.status == "pending" %}
+                        ☑️ Pending
+                        {% endif %}
+                    </button>
+                </form>
+
             </td>
         </tr>
         {% endfor %}
@@ -66,15 +72,16 @@
             {% csrf_token %}
             <button type="submit">🔄 Rotate Tasks</button>
         </form>
-    <img id="pokeball" src="{% static 'schedule/images/Poké_Ball_icon.svg.png' %}" alt="Logo">    
+        <img id="pokeball" src="{% static 'schedule/images/Poké_Ball_icon.svg.png' %}" alt="Logo">
     </div>
 
-    
-    
+
+
 
     <!-- <a href="{% url 'reassign_task' %}">
         <button>Swap Tasks Between Tenants</button>
     </a> -->
-    
+
 </body>
+
 </html>

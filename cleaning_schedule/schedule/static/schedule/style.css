@@ -160,6 +160,29 @@ a {
     color: white;
 }
 
+.done-button {
+    border: none;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.done-button.done {
+    background-color: #e6ffe6;
+    /* soft green */
+    color: #2d662d;
+    font-weight: 600;
+    box-shadow: 0 0 6px rgba(0, 128, 0, 0.2);
+}
+
+.done-button.pending {
+    background-color: #fff8e1;
+    /* soft yellow */
+    color: #856404;
+}
+
+
 .table-actions button {
     background-color: #3b82f6;
     border: none;
