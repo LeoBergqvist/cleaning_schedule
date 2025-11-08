@@ -1,11 +1,3 @@
-/* body {
-    font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    background-color: #f8fafc;
-    color: black;
-    margin: 0;
-    padding: 0;
-} */
-
 body {
     font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     color: black;
@@ -17,11 +9,6 @@ body {
     background-size: cover;
 }
 
-/* h1 {
-    text-align: center;
-    margin-top: 40px;
-    color: #2b2d42;
-} */
 
 h1 {
     text-align: center;
@@ -29,16 +16,8 @@ h1 {
     font-family: 'Kosugi Maru', "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     font-weight: 700;
     font-size: 2.6rem;
-    /* background: linear-gradient(90deg, #ff7a8a 0%, #ffb6c1 40%, #a6c1ee 70%, #4d8cff 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent; */
-    /* text-shadow: 0 3px 10px rgba(0, 0, 0, 0.5); */
     letter-spacing: 1px;
 }
-
-
-
-
 
 table {
     border-collapse: collapse;
@@ -161,25 +140,31 @@ a {
 }
 
 .done-button {
+    background-color: #6bbf80;
+    /* soft jade green — readable on both dark and light pink/violet backgrounds */
+    color: #f5fff7;
+    /* warm white for legibility */
+    font-weight: 600;
+    box-shadow: 0 0 6px rgba(107, 191, 128, 0.35);
     border: none;
-    padding: 8px 14px;
-    border-radius: 8px;
-    font-size: 14px;
-    transition: all 0.3s ease;
 }
 
 .done-button.done {
-    background-color: #e6ffe6;
-    /* soft green */
-    color: #2d662d;
-    font-weight: 600;
-    box-shadow: 0 0 6px rgba(0, 128, 0, 0.2);
+    background-color: #78d8a4;
+    /* gentle minty green — fresh and clean */
+    color: #0f2b1f;
+    /* deep moss text for contrast on light background */
+    font-weight: 500;
+    box-shadow: 0 0 6px rgba(120, 216, 164, 0.35);
 }
 
 .done-button.pending {
-    background-color: #fff8e1;
-    /* soft yellow */
-    color: #856404;
+    background-color: #9a89662e;
+    /* soft golden amber — cheerful and balanced */
+    color: #382817;
+    /* warm brown text for readability */
+    font-weight: 500;
+    box-shadow: 0 0 6px rgba(242, 192, 85, 0.35);
 }
 
 
@@ -251,7 +236,6 @@ a {
     /* adjust horizontal placement */
     width: 40px;
     /* banner thickness */
-    /* height: 10vh; full screen height */
     background-color: limegreen;
     color: white;
     font-family: "Noto Sans JP", "Segoe UI", sans-serif;
@@ -265,6 +249,25 @@ a {
     letter-spacing: 4px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     z-index: 10;
+}
+
+.weather-widget {
+    position: absolute;
+    top: 5px;
+    right: 0;
+    background-color: #0000003b;
+    color: white;
+    font-family: "Noto Sans JP", "Segoe UI", sans-serif;
+    font-weight: bold;
+    text-orientation: upright;
+    text-align: center;
+    border-radius: 25px;
+    border: 2px solid #8080804a;
+    letter-spacing: 2px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+    padding: 4px;
+    margin: 5px;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -309,6 +312,23 @@ a {
     button:hover {
         background-color: #c026d3;
         color: #fff;
+    }
+
+    .done-button.done {
+        background-color: #5da07a;
+        /* soft sage green with cool undertone */
+        color: #f3fff7;
+        /* pale mint white for contrast */
+        font-weight: 500;
+        box-shadow: 0 0 6px rgba(93, 160, 122, 0.4);
+    }
+
+    .done-button.pending {
+        background-color: #9a89662e;
+        /* antique gold – muted and elegant */
+        color: #fffaf0;
+        font-weight: 500;
+        box-shadow: 0 0 6px rgba(199, 154, 74, 0.4);
     }
 
     .vertical-banner {

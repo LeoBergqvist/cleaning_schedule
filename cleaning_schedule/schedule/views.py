@@ -1,7 +1,14 @@
+import openmeteo_requests
+
+import pandas as pd
+import requests_cache
+from retry_requests import retry
+
 import logging
 
 from django.http import HttpResponseBadRequest
 from django.shortcuts import get_object_or_404, redirect, render
+from django.views.generic import ListView
 
 from .forms import TaskForm, TenantForm
 from .models import Room, Task, TaskAssignment, Tenant
@@ -9,35 +16,83 @@ from .models import Room, Task, TaskAssignment, Tenant
 logger = logging.getLogger(__name__)
 
 
+def weather_info():
+
+    # Setup the Open-Meteo API client with cache and retry on error
+    cache_session = requests_cache.CachedSession('.cache', expire_after = 3600)
+    retry_session = retry(cache_session, retries = 5, backoff_factor = 0.2)
+    openmeteo = openmeteo_requests.Client(session = retry_session)
+
+    # Make sure all required weather variables are listed here
+    # The order of variables in hourly or daily is important to assign them correctly below
+    url = "https://api.open-meteo.com/v1/forecast"
+    params = {
+        "latitude": 35.6589,
+        "longitude": 139.7066,
+        "hourly": ["temperature_2m", "rain", "relative_humidity_2m"],
+        "timezone": "Asia/Tokyo",
+        "forecast_days": 1,
+    }
+    responses = openmeteo.weather_api(url, params=params)
+
+    # Process first location. Add a for-loop for multiple locations or weather models
+    response = responses[0]
+    # print(f"Coordinates: {response.Latitude()}°N {response.Longitude()}°E")
+    # print(f"Elevation: {response.Elevation()} m asl")
+    # print(f"Timezone: {response.Timezone()}{response.TimezoneAbbreviation()}")
+    # print(f"Timezone difference to GMT+0: {response.UtcOffsetSeconds()}s")
+
+    # Process hourly data. The order of variables needs to be the same as requested.
+    hourly = response.Hourly()
+    temperature = hourly.Variables(0).ValuesAsNumpy()[0]
+    rain = hourly.Variables(1).ValuesAsNumpy()[0]
+    humidity = hourly.Variables(2).ValuesAsNumpy()[0]
+    current_weather = {
+        "temperature": temperature,
+        "rain": rain,
+        "humidity": humidity,
+        "unit": "°C"
+        }
+    print(current_weather)
+
+    return current_weather
+
 # Tasks
 
 
-# Gets tasks and shows them on mainpage
-def task_list(request):
-    # tasks = Task.objects.all().order_by('room__name')
-    tasks = Task.objects.all().order_by("room__name")
-    return render(request, "schedule/task_list.html", {"tasks": tasks})
+class TaskListView(ListView):
+    model = Task
+    context_object_name = "tasks"
 
+    def get_queryset(self):
+        return Task.objects.order_by("room__name")
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Add your extra items:
+        context["hourly_weather"] = weather_info() 
+        return context
+    
+    
 def add_task(request):
     if request.method == "POST":
         form = TaskForm(request.POST)
         if form.is_valid():
             form.save()  # creates the tenant
-            # room = form.cleaned_data.get("room")
-            # if room:
-            #     room.tenant = tenant
-            #     room.save()
             return redirect("task_list")
     else:
         form = TaskForm()
     return render(request, "schedule/add_task.html", {"form": form})
 
 
-# Gets and renders the collection of taskss
-def tasks_descriptions(request):
-    tasks = Task.objects.all().order_by("name")
-    return render(request, "schedule/tasks_descriptions.html", {"tasks": tasks})
+# Gets and renders the collection of tasks
+class TaskDescriptionListView(ListView):
+    model = Task
+    context_object_name = "tasks"
+    template_name = "schedule/tasks_descriptions.html"      
+
+    def get_queryset(self):
+        return Task.objects.order_by("name")
 
 
 def edit_task(request, pk):
@@ -45,13 +100,12 @@ def edit_task(request, pk):
     task = get_object_or_404(Task, id=task_id)
     if request.method == "POST":
         form = TaskForm(request.POST, instance=task)
-        # logger.debug(f"Tenant data: test")
         if form.is_valid():
             task = form.save(commit=False)
             new_room = form.cleaned_data.get("room")
             old_room = getattr(task, "room", None)
             # Safely remove tenant from previous room if necessary
-
+            
             # Only update room if user selected a new one
             if new_room:
                 # old_room = getattr(tenant, "room", None)
@@ -161,7 +215,7 @@ def add_tenant(request):
             if room:
                 room.tenant = tenant
                 room.save()
-            return redirect("task_list")  # or wherever you want
+            return redirect("task_list")  
     else:
         form = TenantForm()
     return render(request, "schedule/add_tenant.html", {"form": form})
@@ -217,10 +271,12 @@ def edit_tenant(request, pk):
     return redirect("task_list")  # redirect to a relevant page
 
 
-def tenant_list(request):
-    # tenants = Tenant.objects.all()
-    tenants = Tenant.objects.all().order_by("room__name")
-    return render(request, "schedule/tenant_list.html", {"tenants": tenants})
+class TenantListView(ListView):
+    model = Tenant
+    context_object_name = "tenants"
+
+    def get_queryset(self):
+        return Tenant.objects.order_by("room__name")
 
 
 def delete_tenant(request, tenant_id):

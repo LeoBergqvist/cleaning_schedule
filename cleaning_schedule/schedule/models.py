@@ -15,7 +15,8 @@ class Room(models.Model):
                                   related_name="room", null=True, blank=True)
 
     def __str__(self):
-            return f"{self.name} ({self.tenant.name if self.tenant else 'empty'})"
+        return f"{self.name} ({self.tenant.name if self.tenant else 'empty'})"
+
 
 class Task(models.Model):
     name = models.CharField(max_length=100)
@@ -27,7 +28,7 @@ class Task(models.Model):
     ]
 
     room = models.ForeignKey(Room, on_delete=models.CASCADE, null=True, related_name="assigned")
-    #schedule = models.ForeignKey(Schedule, on_delete=models.CASCADE, related_name="assignments")
+    # schedule = models.ForeignKey(Schedule, on_delete=models.CASCADE, related_name="assignments")
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="pending")
 
     def __str__(self):
@@ -42,7 +43,7 @@ class TaskAssignment(models.Model):
 
     task = models.ForeignKey(Task, on_delete=models.CASCADE, related_name="assignments")
     room = models.ForeignKey(Room, on_delete=models.CASCADE, related_name="assignments")
-    #schedule = models.ForeignKey(Schedule, on_delete=models.CASCADE, related_name="assignments")
+    # schedule = models.ForeignKey(Schedule, on_delete=models.CASCADE, related_name="assignments")
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="pending")
     completed_at = models.DateTimeField(blank=True, null=True)
 
